@@ -1,0 +1,8 @@
+<div class="ui middle aligned selection divided list">
+  <a *ngFor="let entry of entries" class="item bs-entry-list-item"
+     [entry]="entry" [routerLink]="entry.id.toString()"></a>
+  <div *ngIf="!entries" class="ui active dimmer">
+    <div class="ui large text leader">Einträge werden geladen...</div>
+  </div>
+  <p *ngIf="entries && !entries.length">Es wurden noch keine Einträge erstellt.</p>
+</div>

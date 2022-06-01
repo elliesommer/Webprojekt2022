@@ -1,0 +1,59 @@
+<h1>Erstelle deinen Eintrag</h1>
+<form class="ui large form" [formGroup]="entryForm"
+(ngSubmit)="submitForm()">
+  <input type="hidden" formControlName="id">
+  <div class="field">
+    <label>Titel</label>
+    <input formControlName="title">
+    <div *ngIf="errors['title']" class="ui negative message"> {{
+      errors['title']}}</div>
+  </div>
+  <div class="field">
+    <label>Lehrveranstaltung</label>
+    <select formControlName="subject">
+      <option>Objektorientierte Programmierung</option>
+      <option>Java Script</option>
+      <option>Clientseitiges Web-Programmieren</option>
+      <option>Serverseitiges Web-Programmieren</option>
+    </select>
+    <div *ngIf="errors['subject']" class="ui negative message"> {{
+      errors['subject']}}</div>
+  </div>
+  <div>
+    <label>Nähere Infos</label>
+    <textarea formControlName="description" rows="3"></textarea>
+  </div>
+  <div class="field" formArrayName="bookings">
+    <label>Terminvorschläge</label>
+    <div class="fields" *ngFor="let control of bookings?.controls; index as i; last as l" formGroupName="{{i}}">
+      <input type="hidden" formControlName="id">
+
+      <div class="nine wide field">
+        <input type="date" formControlName="day">
+        <div *ngIf="errors['day']" class="ui negative message">{{
+          errors['day'] }}
+          }}
+        </div>
+      </div>
+      <input type="hidden" formControlName="is_booked">
+      <div class="six wide field">
+        <input formControlName="from">
+        <div *ngIf="errors['from']" class="ui negative message">{{
+          errors['from'] }}
+          }}
+        </div>
+      </div>
+      <div class="six wide field">
+        <input formControlName="to">
+        <div *ngIf="errors['to']" class="ui negative message">{{
+          errors['to'] }}
+          }}
+        </div>
+      </div>
+      <button (click)="addBookingsControl()" class="ui large button"
+      type="button">+</button>
+    </div>
+  </div>
+  <button type="submit" class="ui button"
+  [disabled]="entryForm.invalid">Speichern</button>
+</form>
