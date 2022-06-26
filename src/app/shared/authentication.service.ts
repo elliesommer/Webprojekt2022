@@ -8,7 +8,8 @@ import {UserFactory} from "./user-factory";
 interface Token {
   exp: number;
   user: {
-    id: string;
+    id: string
+    is_searching: boolean
   };
 }
 
@@ -40,6 +41,7 @@ export class AuthenticationService {
     //console.log(decodedToken.user.id);
     sessionStorage.setItem("token", token);
     sessionStorage.setItem("userId", decodedToken.user.id);
+    sessionStorage.setItem("is_searching",decodedToken.user.is_searching.toString());
   }
 
   logout() {
@@ -71,8 +73,16 @@ export class AuthenticationService {
   }
 
   isSearching(){
-    this.bs.getUser(Number(sessionStorage.getItem("userId"))).subscribe(u => this.user = u);
-    return this.user.is_searching;
+    //this.bs.getUser(Number(sessionStorage.getItem("userId"))).subscribe(u => this.user = u);
+    //return this.user.is_searching;
+    console.log("checking user status");
+    return sessionStorage.getItem("is_searching")=="0"?false:true;
+  }
 
+  isBooked(){
+    //this.bs.getUser(Number(sessionStorage.getItem("userId"))).subscribe(u => this.user = u);
+    //return this.user.is_searching;
+    console.log("checking booked status");
+    return sessionStorage.getItem("is_booked")=="0"?false:true;
   }
 }
